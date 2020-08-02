@@ -115,6 +115,12 @@ io.sockets.on("connection", function (socket) {
     ack(200);
   });
 
+  socket.on("message", function (msg) {
+    const room = socket.rooms[socket._name]
+
+    socket.to(room).emit("message", msg);
+  });
+
   socket.on("raw", function (data) {
     socket.to(`${socket.rooms[socket._name]}`).emit("raw", data);
   });
